@@ -1,9 +1,6 @@
 package com.cybervault.data;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DataBaseManager {
     private static final String URL = "jdbc:sqlite:cybervault.db";
@@ -33,6 +30,19 @@ public class DataBaseManager {
             stmt.execute(sqlCategories);
             stmt.execute(sqlVaultItems);
 
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void addCategory(String categoryName){
+        String sql = "INSERT INTO categories(name) VALUES(?)"; //We use VALUES(?) to prevent SQL injection as I learned
+
+        try(Connection conn = connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setString(1,categoryName);
+            pstmt.executeUpdate();
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
