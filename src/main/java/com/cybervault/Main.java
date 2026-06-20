@@ -11,5 +11,7 @@ public class Main {
         db.createNewDatabase();
 
         System.out.println("Data Base is tested. Active");
+
+        db.addCategory("Social Media");
     }
 }

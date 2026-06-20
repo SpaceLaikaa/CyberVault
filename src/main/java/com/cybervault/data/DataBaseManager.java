@@ -47,4 +47,22 @@ public class DataBaseManager {
             System.out.println(e.getMessage());
         }
     }
+
+    public void addVaultItem(String appName, String username, String encryptedPassword, String url, int categoryId){
+        String sql = "INSERT INTO vault_items (app_name, username, encrypted_password, url, category_id) VALUES (?, ?, ?, ?, ?)";
+
+        try(Connection conn = connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setString(1,appName);
+            pstmt.setString(2,username);
+            pstmt.setString(3,encryptedPassword);
+            pstmt.setString(4,url);
+            pstmt.setInt(5,categoryId);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
 }
