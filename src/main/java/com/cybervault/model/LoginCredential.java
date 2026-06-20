@@ -1,4 +1,4 @@
-package com.cybervault;
+package com.cybervault.model;
 
 public class LoginCredential extends VaultItem{
     private String username;
@@ -9,6 +9,12 @@ public class LoginCredential extends VaultItem{
         this.encryptedPassword = encryptedPassword;
         this.username = username;
     }
+
+    public String getUsername() {return username;}
+    public void setUsername(String username) {this.username = username;}
+
+    public String getEncryptedPassword() {return encryptedPassword;}
+    public void setEncryptedPassword(String encryptedPassword) {this.encryptedPassword = encryptedPassword;}
 
     @Override
     public void displaySummary(){

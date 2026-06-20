@@ -1,4 +1,4 @@
-package com.cybervault;
+package com.cybervault.model;
 
 public abstract class VaultItem {
     private int id;
