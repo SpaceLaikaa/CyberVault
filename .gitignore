@@ -4,6 +4,11 @@ target/
 !**/src/test/**/target/
 .kotlin
 
+### Data Security ###
+*.db
+cybervault.db
+cybervault.db-journal
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
@@ -37,3 +42,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+Thumbs.db
