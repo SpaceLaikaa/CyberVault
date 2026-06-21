@@ -1,6 +1,8 @@
 package com.cybervault.data;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataBaseManager {
     private static final String URL = "jdbc:sqlite:cybervault.db";
@@ -64,5 +66,24 @@ public class DataBaseManager {
         } catch (SQLException e){
             System.out.println(e.getMessage());
         }
+    }
+
+    public List<String> getAllCategories(){
+        List<String> categories = new ArrayList<>();
+
+        String sql = "SELECT name FROM categories";
+
+        try(Connection con = connect();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)){
+
+            while(rs.next()){
+                categories.add(rs.getString("name"));
+            }
+
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return categories;
     }
 }
