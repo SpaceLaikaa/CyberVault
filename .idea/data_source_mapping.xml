@@ -2,5 +2,6 @@
 <project version="4">
   <component name="DataSourcePerFileMappings">
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/77cce441-e13f-42a1-831d-aab3d2f50e12/console_1.sql" value="77cce441-e13f-42a1-831d-aab3d2f50e12" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/cybervault/data/DataBaseManager.java" value="77cce441-e13f-42a1-831d-aab3d2f50e12" />
   </component>
 </project>

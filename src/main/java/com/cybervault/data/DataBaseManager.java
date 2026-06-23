@@ -56,17 +56,20 @@ public class DataBaseManager {
         }
     }
 
-    public void addVaultItem(String appName, String username, String encryptedPassword, String url, int categoryId){
-        String sql = "INSERT INTO vault_items (app_name, username, encrypted_password, url, category_id) VALUES (?, ?, ?, ?, ?)";
+    public void addVaultItem(String itemType, String appName, String username, String encryptedPassword, String noteContent, String url, int categoryId){
+        String sql = "INSERT INTO vault_items (item_type, app_name, username, encrypted_password, note_content, url, category_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try(Connection conn = connect();
             PreparedStatement pstmt = conn.prepareStatement(sql)){
 
-            pstmt.setString(1,appName);
-            pstmt.setString(2,username);
-            pstmt.setString(3,encryptedPassword);
-            pstmt.setString(4,url);
-            pstmt.setInt(5,categoryId);
+            pstmt.setString(1, itemType);
+            pstmt.setString(2, appName);
+            pstmt.setString(3, username);
+            pstmt.setString(4, encryptedPassword);
+            pstmt.setString(5, noteContent);
+            pstmt.setString(6, url);
+            pstmt.setInt(7, categoryId);
+
             pstmt.executeUpdate();
 
         } catch (SQLException e){
@@ -111,8 +114,7 @@ public class DataBaseManager {
                     String password = rs.getString("encrypted_password");
                     String url = rs.getString("url");
 
-                    LoginCredential login = new LoginCredential(id, appName, url, username, password);
-
+                    LoginCredential login = new LoginCredential(id, appName, url, password, username);
                     vaultItems.add(login);
 
 
