@@ -8,7 +8,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TableView;
@@ -23,6 +25,8 @@ public class App extends Application {
     public void start(Stage primaryStage){
         mainList = FXCollections.observableArrayList(dbm.getAllItems());
 
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/cybervault/CyberVault.jpg")));
+
         TableView<VaultItem> table = new TableView<>();
 
         TableColumn<VaultItem, String> nameCol = new TableColumn<>("Cyber Vault");
@@ -35,7 +39,55 @@ public class App extends Application {
 
         table.setItems(mainList);
 
+        TextField appNameInput = new TextField();
+        appNameInput.setPromptText("App Name (Ex.: Github)");
+
+        TextField urlInput = new TextField();
+        urlInput.setPromptText("URL (Ex.: https://github.com)");
+
+        TextField usernameInput = new TextField();
+        usernameInput.setPromptText("User Name");
+
+        TextField passwordInput = new TextField();
+        passwordInput.setPromptText("Password");
+
+        Button addButton = new Button("Quick Add (Login)");
         Button refreshButton = new Button("Refresh Data");
+
+        // DATA ADD EVENT
+
+        addButton.setOnAction(event -> {
+            String appName = appNameInput.getText();
+            String url = urlInput.getText();
+            String username = usernameInput.getText();
+            String password = passwordInput.getText();
+
+            if (!appName.isEmpty()) {
+                dbm.addVaultItem("LOGIN", appName, username, password, null, url, 1);
+
+                mainList.clear();
+                mainList.addAll(dbm.getAllItems());
+
+                appNameInput.clear();
+                urlInput.clear();
+                usernameInput.clear();
+                passwordInput.clear();
+            }
+        });
+
+        // DELETE EVENT
+
+        Button deleteButton = new Button("Delete Selected");
+
+        deleteButton.setOnAction(event -> {
+            VaultItem selectedItem = table.getSelectionModel().getSelectedItem();
+
+            if (selectedItem != null) {
+                dbm.deleteVaultItem(selectedItem.getId());
+
+                mainList.remove(selectedItem);
+            }
+        });
 
         refreshButton.setOnAction(event -> {
             System.out.println("Refreshing...");
