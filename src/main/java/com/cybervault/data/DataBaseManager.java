@@ -134,4 +134,19 @@ public class DataBaseManager {
         }
         return vaultItems;
     }
+
+    public void deleteVaultItem(int id){
+        String sql = "DELETE FROM vault_items WHERE id = ?";
+
+        try(Connection conn = connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            System.out.println("ID NO: "+id+", This Item Has Been Deleted From The Data.");
+
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
 }
