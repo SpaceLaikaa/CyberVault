@@ -5,12 +5,14 @@ import com.cybervault.model.VaultItem;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TableView;
@@ -29,13 +31,21 @@ public class App extends Application {
 
         TableView<VaultItem> table = new TableView<>();
 
-        TableColumn<VaultItem, String> nameCol = new TableColumn<>("Cyber Vault");
+        TableColumn<VaultItem, String> nameCol = new TableColumn<>("App Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("appName"));
 
         TableColumn<VaultItem, String> urlCol = new TableColumn<>("URL");
         urlCol.setCellValueFactory(new PropertyValueFactory<>("url"));
 
-        table.getColumns().addAll(nameCol, urlCol);
+        TableColumn<VaultItem, String> usernameCol = new TableColumn<>("User Name");
+        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
+
+        TableColumn<VaultItem, String> passwordCol = new TableColumn<>("Password");
+        passwordCol.setCellValueFactory(new PropertyValueFactory<>("encryptedPassword"));
+
+
+
+        table.getColumns().addAll(nameCol, urlCol, usernameCol, passwordCol);
 
         table.setItems(mainList);
 
@@ -95,10 +105,17 @@ public class App extends Application {
             mainList.addAll(dbm.getAllItems());
         });
 
-        VBox root = new VBox(10);
-        root.getChildren().addAll(table, refreshButton);
+        HBox inputForm = new HBox(10);
+        inputForm.getChildren().addAll(appNameInput, urlInput, usernameInput, passwordInput, addButton);
 
-        Scene scene = new Scene(root, 600, 400);
+        HBox actionButtons = new HBox(10);
+        actionButtons.getChildren().addAll(refreshButton, deleteButton);
+
+        VBox root = new VBox(15);
+        root.setPadding(new Insets(15));
+        root.getChildren().addAll(table, inputForm, actionButtons);
+
+        Scene scene = new Scene(root, 850, 500);
 
         primaryStage.setTitle("CyberVault - Your Password Vault");
         primaryStage.setScene(scene);
